@@ -3,15 +3,26 @@
  * @param {string} word The word to check
  */
 function permutationPalindrome(word) {
-    //check for palindrome
-    const isPalindrome = (word) => {
-        const wordArray = Array.from(word)
-        const forward = wordArray.toLowerCase().join('');
-        const backward = wordArray.toLowerCase().split('').reverse().join('');
+    let count = {};
+    //palindrome can have one nonduplicate character in the center
+    let singleChar = [];
+    const wordArray = word.toLowerCase().split('');
+    let isPalindrome = false;
 
-        (forward === backward) ? true : false;
+    wordArray.forEach(letter => {
+        if ( count[letter] ){
+            count[letter] ++;
+        }else{
+            count[letter] = 1;
+        }
+    });
+    
+    for (let duplicates in count) {
+        if (count[duplicates] % 2) singleChar.push(count[duplicates]);
     }
-    console.log(isPalindrome('Hello'))
+
+    singleChar.length <= 1 ? isPalindrome = true : isPalindrome;
+    return isPalindrome;
 }
 
 module.exports = permutationPalindrome;
